@@ -33,6 +33,14 @@ def submit():
     except ValueError:
         found_now = 0
     
+    # Check for photo submission bonus
+    bonus_points = 0
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        # If a file was actually selected
+        if photo.filename != '':
+            bonus_points = 5 
+
     if not username or found_now <= 0:
         flash("Please enter a valid name and count.")
         return redirect(url_for('index'))
@@ -40,20 +48,28 @@ def submit():
     conn = sqlite3.connect('journey.db')
     c = conn.cursor()
     
+    # Calculate total: Number found + 5 point proof bonus
+    points_to_add = found_now + bonus_points
+    
     c.execute("SELECT total_found FROM users WHERE username=?", (username,))
     row = c.fetchone()
     
     if row:
-        new_total = row[0] + found_now
+        new_total = row[0] + points_to_add
         c.execute("UPDATE users SET total_found=? WHERE username=?", (new_total, username))
     else:
-        new_total = found_now
+        new_total = points_to_add
         c.execute("INSERT INTO users (username, total_found) VALUES (?, ?)", (username, new_total))
     
     conn.commit()
     conn.close()
     
-    flash(f"Success! You found {found_now}. Total: {new_total}")
+    # Feedback message
+    msg = f"Found {found_now}!"
+    if bonus_points > 0:
+        msg += " +5 Bonus for the photo proof! 📸"
+    flash(f"{msg} Total: {new_total}")
+    
     return redirect(url_for('view_medals', username=username))
 
 @app.route('/medals')
