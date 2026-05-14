@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Medals - Journeying With Jesus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1500') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.25; z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 font-sans min-h-screen pb-24">
+    <header class="p-8 text-center">
+        <h1 class="text-2xl font-bold text-stone-800">Trophy Room: <span class="text-amber-600">{{ username }}</span></h1>
+        <p class="text-stone-500 text-sm">Total Found: {{ total }}</p>
+    </header>
+
+    <main class="max-w-md mx-auto px-6">
+        <div class="grid grid-cols-2 gap-4">
+            {% for m in milestones %}
+            <div class="p-6 rounded-3xl text-center shadow-sm transition-all duration-500 {{ 'bg-white border-2 border-amber-300 scale-105' if total >= m.count else 'bg-stone-200/50 grayscale opacity-40' }}">
+                <div class="text-5xl mb-2">{{ m.icon }}</div>
+                <div class="text-sm font-bold text-stone-800">{{ m.name }}</div>
+                <div class="text-[10px] text-stone-500 uppercase font-bold">{{ m.count }} Needed</div>
+                
+                {% if total >= m.count %}
+                    <div class="mt-3 text-[10px] bg-amber-600 text-white rounded-full py-1 px-2 uppercase font-black tracking-tighter">Unlocked</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="mt-8 text-center">
+             <a href="/" class="text-amber-600 font-bold text-sm underline">← Back to Hunting</a>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-white/90 backdrop-blur shadow-2xl rounded-full px-8 py-4 flex justify-around items-center border border-stone-100">
+        <a href="/" class="flex flex-col items-center text-stone-400 hover:text-amber-600">
+            <span class="text-xl">🔍</span>
+            <span class="text-[10px] font-bold uppercase">Find</span>
+        </a>
+        <a href="/medals" class="flex flex-col items-center text-amber-600">
+            <span class="text-xl">🎖️</span>
+            <span class="text-[10px] font-bold uppercase">Rankings</span>
+        </a>
+    </nav>
+</body>
+</html>

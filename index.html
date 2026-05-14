@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journeying With Jesus - Find</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=1500') no-repeat center center fixed;
+            background-size: cover;
+            opacity: 0.25;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 font-sans min-h-screen pb-24">
+    <header class="p-8 text-center">
+        <h1 class="text-4xl font-extrabold text-stone-800 tracking-tight">Journeying <span class="text-amber-600">With Jesus</span></h1>
+        <p class="italic text-stone-500 mt-2">"Seek and you shall find."</p>
+    </header>
+
+    <main class="max-w-md mx-auto px-6">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="bg-amber-100 border border-amber-400 text-amber-700 px-4 py-3 rounded-2xl mb-6 text-center text-sm font-bold">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 border border-white">
+            <form action="/submit" method="POST" class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Traveler Name</label>
+                    <input type="text" name="username" placeholder="Enter your name" required 
+                           class="w-full p-4 bg-stone-100/50 border-none rounded-2xl focus:ring-2 focus:ring-amber-500 outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-stone-500 mb-2">Little Jesus' Found</label>
+                    <input type="number" name="found_count" min="1" placeholder="0" required 
+                           class="w-full p-4 bg-stone-100/50 border-none rounded-2xl text-2xl font-bold text-amber-700 outline-none">
+                </div>
+                <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-95">
+                    Log My Discovery
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-white/90 backdrop-blur shadow-2xl rounded-full px-8 py-4 flex justify-around items-center border border-stone-100">
+        <a href="/" class="flex flex-col items-center text-amber-600">
+            <span class="text-xl">🔍</span>
+            <span class="text-[10px] font-bold uppercase">Find</span>
+        </a>
+        <a href="/medals" class="flex flex-col items-center text-stone-400 hover:text-amber-600">
+            <span class="text-xl">🎖️</span>
+            <span class="text-[10px] font-bold uppercase">Rankings</span>
+        </a>
+    </nav>
+</body>
+</html>
